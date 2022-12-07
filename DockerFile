@@ -3,15 +3,12 @@ ARG NUGET_VERSION
 ARG CONFIGURATION=Release
 ARG ARTIFACTORY_USERNAME
 ARG ARTIFACTORY_PASSWORD
-ARG ARTIFACTORY_NUGET_REGISTRY
 ENV ARTIFACTORY_USERNAME ${ARTIFACTORY_USERNAME}
 ENV ARTIFACTORY_PASSWORD ${ARTIFACTORY_PASSWORD}
-ENV ARTIFACTORY_NUGET_REGISTRY ${ARTIFACTORY_NUGET_REGISTRY}
 WORKDIR /build
-COPY test-code-scanning test-code-scanning
-COPY NuGet.config test-code-scanning
+COPY . test-code-scanning
 WORKDIR /build/test-code-scanning
-RUN dotnet publish -c ${CONFIGURATION} -o out -v normal
+RUN dotnet publish -c Release -o out -v normal
 
 FROM tylertech-docker.jfrog.io/tyler-apm-aspnetcore:6.0-3.3-alpine
 ARG VERSION="0.0.0"
