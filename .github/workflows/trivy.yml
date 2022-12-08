@@ -35,11 +35,13 @@ jobs:
           ARTIFACTORY_PUSH_REGISTRY: "${{ secrets.ARTIFACTORY_PUSH_REGISTRY }}"
           ARTIFACTORY_USERNAME: "${{ secrets.ARTIFACTORY_USERNAME }}"
           ARTIFACTORY_PASSWORD: "${{ secrets.ARTIFACTORY_PASSWORD }}"
-          ARTIFACTORY_TOKEN: "${{ secrets.ARTIFACTORY_TOKEN }}"
         run: |
           docker login -u "$ARTIFACTORY_USERNAME" -p "$ARTIFACTORY_PASSWORD" "$ARTIFACTORY_PULL_REGISTRY"
           docker login -u "$ARTIFACTORY_USERNAME" -p "$ARTIFACTORY_PASSWORD" "$ARTIFACTORY_PUSH_REGISTRY"
-          docker build -t tylertech-scratch-docker-local.jfrog.io/test-code-scanning:${{ github.sha }} .
+          docker build --build-arg "ARTIFACTORY_USERNAME=$ARTIFACTORY_USERNAME" \
+            --build-arg "ARTIFACTORY_PASSWORD=$ARTIFACTORY_PASSWORD" \
+            --build-arg "ARTIFACTORY_NUGET_REGISTRY=$ARTIFACTORY_NUGET_REGISTRY" \
+            tylertech-scratch-docker-local.jfrog.io/test-code-scanning:${{ github.sha }} .
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
