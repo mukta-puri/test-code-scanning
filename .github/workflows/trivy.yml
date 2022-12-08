@@ -45,13 +45,12 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'tylertech-scratch-docker-local.jfrog.io/test-code-scanning:${{ github.sha }}'
-          format: 'table'
-          # exit code when vulnerabilities were found
-          exit-code: 1
-          vuln-type: 'os,library'
+          format: 'template'
+          template: '@/contrib/sarif.tpl'
+          output: 'trivy-results.sarif'
           severity: 'CRITICAL,HIGH'
 
-      # - name: Upload Trivy scan results to GitHub Security tab
-      #   uses: github/codeql-action/upload-sarif@v2
-      #   with:
-      #     sarif_file: 'trivy-results.sarif'
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
