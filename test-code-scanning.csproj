@@ -39,7 +39,9 @@
     <PackageReference Include="tyler-caching-service-core" Version="2.0.3" />
     <PackageReference Include="Tyler.Extensions.Configuration.Consul" Version="3.0.0" />
     <PackageReference Include="Tyler.Platform.SDK" Version="3.0.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.1"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.1">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>
