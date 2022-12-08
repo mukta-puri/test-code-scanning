@@ -40,7 +40,6 @@ jobs:
           docker login -u "$ARTIFACTORY_USERNAME" -p "$ARTIFACTORY_PASSWORD" "$ARTIFACTORY_PUSH_REGISTRY"
           docker build --build-arg "ARTIFACTORY_USERNAME=$ARTIFACTORY_USERNAME" \
             --build-arg "ARTIFACTORY_PASSWORD=$ARTIFACTORY_PASSWORD" \
-            --build-arg "ARTIFACTORY_NUGET_REGISTRY=$ARTIFACTORY_NUGET_REGISTRY" \
             tylertech-scratch-docker-local.jfrog.io/test-code-scanning:${{ github.sha }} .
 
       - name: Run Trivy vulnerability scanner
